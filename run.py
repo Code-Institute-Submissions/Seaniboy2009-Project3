@@ -13,6 +13,10 @@ class Board:
         self.board = [["[]" for x in range(size)] for y in range(size)]
         self.ships = ships
 
+    def create_board(self):
+        for row in self.board:
+            print(" ".join(row))
+
 
 def validate_input(input):
     """
@@ -20,7 +24,7 @@ def validate_input(input):
     """
     valid_input = [4, 5, 6, 7, 8]
     try:
-        if int(input) not in valid_input:
+        if input not in valid_input:
             raise ValueError(
                 f"Must be {valid_input}, you put {input}"
             )       
@@ -49,12 +53,16 @@ def start_game():
 
     while True:
 
-        ships = input("Please select number of ships, 2 min 6 max")
+        ships = int(input("Please select number of ships, 4 min 8 max:\n"))
         if validate_input(ships):
             break
 
     player_b = Board(name, size, ships)
     computer_b = Board("Computer", size, ships)
+
+    player_b.create_board()
+    print("_" * (size * size))
+    computer_b.create_board()
 
 
 start_game()
