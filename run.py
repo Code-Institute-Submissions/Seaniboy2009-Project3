@@ -12,7 +12,7 @@ class Board:
         self.num_ships = num_ships
         self.type = type
         self.ships = []
-        self.misses = []
+        self.shots = []
 
     def create_board(self):
         for row in self.board:
@@ -25,8 +25,19 @@ class Board:
         #     self.board[x][y] = "!"
         print(self.ships)
 
-    # def take_shot(self, x, y):
-    #     if self.board[x][y]
+    def take_shot(self, x, y):
+        print("Shot fired...")
+        self.shots.append((x, y))
+        self.board[x][y] = "*"
+
+        if (x, y) in self.ships:
+            self.board[x][y] = "X"
+            print("hit")
+        else:
+            print("Miss")
+
+    def return_shots(self):
+        return self.shots
 
 
 def validate_input(input):
@@ -63,6 +74,21 @@ def return_num(num):
     return randint(0, num - 1)
 
 
+def play_game(player, computer):
+    """
+
+    """
+    player.create_board()
+    print("_" * 30)
+    computer.create_board()
+
+    x = int(input("Please select grid X:\n"))
+    y = int(input("Please select grid Y:\n"))
+
+    if computer.take_shot(x, y) in computer.return_shots():
+        computer.take_shot()
+
+
 def start_game():
     """
     Initialize the start function, ask for player name, board size.
@@ -97,9 +123,7 @@ def start_game():
         add_ships_to_board(player_b)
         add_ships_to_board(computer_b)
 
-    player_b.create_board()
-    print("_" * (size * size))
-    computer_b.create_board()
+    play_game(player_b, computer_b)
 
 
 start_game()
