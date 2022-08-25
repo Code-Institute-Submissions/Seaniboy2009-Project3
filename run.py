@@ -1,5 +1,7 @@
 from random import randint
 
+score = {"player": 0, "Computer": 0}
+
 
 class Board:
     """
@@ -23,33 +25,40 @@ class Board:
         self.board[x][y] = "!"
         # if self.type == "player":
         #     self.board[x][y] = "!"
-        print(self.ships)
 
     def take_shot(self, x, y):
         print("Shot fired...")
         self.shots.append((x, y))
-        self.board[x][y] = "*"
+        self.board[x][y] = "X"
 
         if (x, y) in self.ships:
-            self.board[x][y] = "X"
-            print("hit")
+            self.board[x][y] = "*"
+            return "Hit"
         else:
-            print("Miss")
+            return "Miss"
 
     def return_shots(self):
         return self.shots
 
 
-def validate_input(input):
+def validate_input(input, max, type):
     """
     Checkes the input and validates it as int and sting or out of scope
     """
     valid_input = [4, 5, 6, 7, 8]
     try:
-        if input not in valid_input:
-            raise ValueError(
-                f"Must be {valid_input}, you put {input}"
-            )       
+        if type == "start":
+            if input not in valid_input:
+                print("Type start")
+                raise ValueError(
+                    f"Must be {valid_input}, you put {input}"
+                )
+        elif type == "shot":
+            print("Type shot")
+            if input not in range(0, max):
+                raise ValueError(
+                    f"Board size is {max}, you put {input}"
+                )
     except ValueError as e:
         print(f"input is invalid {e}, please try again")
         return False
@@ -74,19 +83,45 @@ def return_num(num):
     return randint(0, num - 1)
 
 
-def play_game(player, computer):
+def play_game(player, computer, size, num_ships):
     """
-
+    Creats the player/computer boards and waits for the player input to fire a shot.
+    then the computer will randomly pick and fire a shot.
+    once both shots have been fired the board will be displayed again with the hits or miss.
     """
+    print(f"Board set to size: {size}X{size}")
+    print(f"Min being 0 and max: {size - 1}")
+    print(f"With {num_ships} ships Each")
     player.create_board()
     print("_" * 30)
     computer.create_board()
 
-    x = int(input("Please select grid X:\n"))
-    y = int(input("Please select grid Y:\n"))
+    while True:
 
-    if computer.take_shot(x, y) in computer.return_shots():
-        computer.take_shot()
+        while True:
+            x = int(input("Please select grid X:\n"))
+            if validate_input(x, size, "shot"):
+                break
+
+        while True:
+            y = int(input("Please select grid Y:\n"))
+            if validate_input(y, size, "shot"):
+                break
+
+        if computer.take_shot(x, y) in computer.return_shots():
+            result = computer.take_shot()
+            print(result)
+        
+        x = return_num(size)
+        y = return_num(size)
+
+        if player.take_shot(x, y) in player.return_shots():
+            result = player.take_shot()
+            print(result)
+
+        player.create_board()
+        print("_" * 30)
+        computer.create_board()
 
 
 def start_game():
@@ -99,21 +134,21 @@ def start_game():
 
     # Testing
     name = "Player"
-    size = 2
-    ships = 2
+    size = 4
+    ships = 4
 
     # name = input("Please enter your name:\n")
 
     # while True:
 
     #     size = int(input("Please pick board size, Min 4: Max 8:\n"))
-    #     if validate_input(size):
+    #     if validate_input(size, "start"):
     #         break
 
     # while True:
 
     #     ships = int(input("Please select number of ships, Min 4: Max 8:\n"))
-    #     if validate_input(ships):
+    #     if validate_input(ships, "start"):
     #         break
 
     player_b = Board(name, size, ships, "player")
@@ -123,7 +158,7 @@ def start_game():
         add_ships_to_board(player_b)
         add_ships_to_board(computer_b)
 
-    play_game(player_b, computer_b)
+    play_game(player_b, computer_b, size, ships)
 
 
 start_game()
