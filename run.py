@@ -27,7 +27,6 @@ class Board:
         #     self.board[x][y] = "!"
 
     def take_shot(self, x, y):
-        print("Shot fired...")
         self.shots.append((x, y))
         self.board[x][y] = "X"
 
@@ -37,8 +36,11 @@ class Board:
         else:
             return "Miss"
 
-    def return_shots(self):
-        return self.shots
+    def return_shots(self, x, y):
+        if (x, y) in self.shots:
+            return True
+        else:
+            return False
 
 
 def validate_input(input, max, type):
@@ -47,17 +49,17 @@ def validate_input(input, max, type):
     """
     valid_input = [4, 5, 6, 7, 8]
     try:
+        num = int(input)
+
         if type == "start":
-            if input not in valid_input:
-                print("Type start")
+            if num not in valid_input:
                 raise ValueError(
-                    f"Must be {valid_input}, you put {input}"
+                    f"Must be {valid_input}, you put {num}"
                 )
         elif type == "shot":
-            print("Type shot")
-            if input not in range(0, max):
+            if num not in range(0, max):
                 raise ValueError(
-                    f"Board size is {max}, you put {input}"
+                    f"Board size is {max}, you put {num}"
                 )
     except ValueError as e:
         print(f"input is invalid {e}, please try again")
@@ -99,26 +101,33 @@ def play_game(player, computer, size, num_ships):
     while True:
 
         while True:
-            x = int(input("Please select grid X:\n"))
+            x = input("Please select grid X:\n")
             if validate_input(x, size, "shot"):
                 break
 
         while True:
-            y = int(input("Please select grid Y:\n"))
+            y = input("Please select grid Y:\n")
             if validate_input(y, size, "shot"):
                 break
 
-        if computer.take_shot(x, y) in computer.return_shots():
-            result = computer.take_shot()
-            print(result)
-        
+        if computer.return_shots(x, y):
+            print("already fired there")
+        else:
+            computer.take_shot(int(x), int(y))
+            print("Not fired there")
+
         x = return_num(size)
         y = return_num(size)
 
-        if player.take_shot(x, y) in player.return_shots():
-            result = player.take_shot()
-            print(result)
+        if player.return_shots(x, y):
+            print("already fired there")
+        else:
+            player.take_shot(int(x), int(y))
+            print("Not fired there")
 
+        print(f"Board set to size: {size}X{size}")
+        print(f"Min being 0 and max: {size - 1}")
+        print(f"With {num_ships} ships Each")
         player.create_board()
         print("_" * 30)
         computer.create_board()
