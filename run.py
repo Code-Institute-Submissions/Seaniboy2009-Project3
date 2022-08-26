@@ -58,10 +58,8 @@ class Board:
         Checks if the location has been shot at before using x, y.
         """
         if (x, y) in self.shots:
-            print("already fired there")
             return True
         else:
-            print("not fired here")
             return False
 
     def return_ships(self, x, y):
@@ -131,6 +129,7 @@ def play_game(player, computer, size, num_ships):
     print(f"Min being 0 and max: {size - 1}")
     print(f"With {num_ships} ships Each")
     print("Grid x is down, Grid Y is along")
+    print("Legand\n X-Miss\n *-hit\n !-Ship")
     print("_" * 30)
     print(f"{player.name} Board")
     player.create_board()
@@ -141,17 +140,18 @@ def play_game(player, computer, size, num_ships):
     while player.score or computer.score < num_ships:
 
         while True:
-            x = input("Please select grid X:\n")
-            if validate_input(x, size, "shot"):
-                break
 
-        while True:
-            y = input("Please select grid Y:\n")
-            if validate_input(y, size, "shot"):
-                break
+            while True:
+                x = input("Please select grid X(down):\n")
+                if validate_input(x, size, "shot"):
+                    break
 
-        while True:
-            if not computer.return_shots(x, y):
+            while True:
+                y = input("Please select grid Y(along):\n")
+                if validate_input(y, size, "shot"):
+                    break
+
+            if not computer.return_shots(int(x), int(y)):
                 player_outcome = computer.take_shot(int(x), int(y))
                 break
 
@@ -159,14 +159,17 @@ def play_game(player, computer, size, num_ships):
             xx = return_num(size)
             yy = return_num(size)
 
-            if not player.return_shots(xx, yy):
+            if not player.return_shots(int(xx), int(yy)):
                 computer_outcome = player.take_shot(int(xx), int(yy))
                 break
+
+        print(computer.return_shots(x, y))
 
         print("_" * 30)
         print("Grid x is down, Grid Y is along")
         print(f"{player.name} Fired at {x}, {y} and {player_outcome}")
         print(f"{computer.name} Fired at {xx}, {yy} and {computer_outcome}")
+        print("Legand\nX-Miss\n*-hit\n!-Ship")
         print(score)
         print("_" * 30)
         print(f"{player.name} Board")
@@ -195,8 +198,7 @@ def start_game():
     Initialize the start function, ask for player name, board size.
     """
 
-    print('Welcome to battleships, please have fun and remember to shout:')
-    print('"YOU SUNK MY BATTLESHIP"\n')
+    print('Welcome to battleships, please have fun.')
 
     name = "Player"
     size = 4
