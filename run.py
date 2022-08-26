@@ -5,7 +5,7 @@ score = {"Player": 0, "Computer": 0}
 
 class Board:
     """
-    Create instance of the board class
+    Create instance of the board class.
     """
     def __init__(self, name, size, num_ships, type):
         self.name = name
@@ -18,16 +18,27 @@ class Board:
         self.score = 0
 
     def create_board(self):
+        """
+        Create the board on the screen using blank spaces.
+        """
         for row in self.board:
             print("  ".join(row))
 
     def add_ship(self, x, y):
+        """
+        Adds ship to grid using X, y. shows player ships with !.
+        """
         self.ships.append((x, y))
         self.board[x][y] = "!"
         # if self.type == "Player":
         #     self.board[x][y] = "!"
 
     def take_shot(self, x, y):
+        """
+        Adds X to x, y input of the guess shot, checks if a ship is there
+        and if there is adds * and updates scores, returns hit or miss
+        to show player.
+        """
         self.shots.append((x, y))
         self.board[x][y] = "X"
 
@@ -39,10 +50,13 @@ class Board:
             else:
                 score["Player"] += 1
             return "Hit"
-        else:
-            return "Missed"
+
+        return "Missed"
 
     def return_shots(self, x, y):
+        """
+        Checks if the location has been shot at before using x, y.
+        """
         if (x, y) in self.shots:
             print("already fired there")
             return True
@@ -51,6 +65,9 @@ class Board:
             return False
 
     def return_ships(self, x, y):
+        """
+        Checks to see if there is a ship at x, y.
+        """
         if (x, y) in self.ships:
             return True
         else:
@@ -122,8 +139,6 @@ def play_game(player, computer, size, num_ships):
     computer.create_board()
 
     while player.score or computer.score < num_ships:
-
-        print(player.score, computer.score)
 
         while True:
             x = input("Please select grid X:\n")
