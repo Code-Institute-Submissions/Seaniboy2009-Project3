@@ -15,10 +15,11 @@ class Board:
         self.type = type
         self.ships = []
         self.shots = []
+        self.score = 0
 
     def create_board(self):
         for row in self.board:
-            print(" ".join(row))
+            print("  ".join(row))
 
     def add_ship(self, x, y):
         self.ships.append((x, y))
@@ -32,13 +33,14 @@ class Board:
 
         if (x, y) in self.ships:
             self.board[x][y] = "*"
+            self.score += 1
             if self.type == "Player":
                 score["Computer"] += 1
             else:
                 score["Player"] += 1
             return "Hit"
         else:
-            return "Miss"
+            return "Missed"
 
     def return_shots(self, x, y):
         if (x, y) in self.shots:
@@ -107,17 +109,21 @@ def play_game(player, computer, size, num_ships):
     then the computer will randomly pick and fire a shot.
     once both shots have been fired the board will be displayed again with the hits or miss.
     """
+    print("_" * 30)
     print(f"Board set to size: {size}X{size}")
     print(f"Min being 0 and max: {size - 1}")
     print(f"With {num_ships} ships Each")
-    print("Grid x is row along, Grid Y is column down")
+    print("Grid x is down, Grid Y is along")
+    print("_" * 30)
     print(f"{player.name} Board")
     player.create_board()
     print("_" * 30)
     print("Computer Board")
     computer.create_board()
 
-    while True:
+    while player.score or computer.score < num_ships:
+
+        print(player.score, computer.score)
 
         while True:
             x = input("Please select grid X:\n")
@@ -131,27 +137,42 @@ def play_game(player, computer, size, num_ships):
 
         while True:
             if not computer.return_shots(x, y):
-                computer.take_shot(int(x), int(y))
+                player_outcome = computer.take_shot(int(x), int(y))
                 break
 
         while True:
-            x = return_num(size)
-            y = return_num(size)
+            xx = return_num(size)
+            yy = return_num(size)
 
-            if not player.return_shots(x, y):
-                player.take_shot(int(x), int(y))
+            if not player.return_shots(xx, yy):
+                computer_outcome = player.take_shot(int(xx), int(yy))
                 break
 
-        print(f"Board set to size: {size}X{size}")
-        print(f"Min being 0 and max: {size - 1}")
-        print(f"With {num_ships} ships Each")
-        print("Grid x is row along, Grid Y is column down\n")
+        print("_" * 30)
+        print("Grid x is down, Grid Y is along")
+        print(f"{player.name} Fired at {x}, {y} and {player_outcome}")
+        print(f"{computer.name} Fired at {xx}, {yy} and {computer_outcome}")
         print(score)
+        print("_" * 30)
         print(f"{player.name} Board")
         player.create_board()
         print("_" * 30)
         print("Computer Board")
         computer.create_board()
+
+    reset_game()
+
+
+def reset_game():
+    """
+    Reset all class and variables
+    """
+    print("********Game reset*********")
+    print(score)
+    score["Computer"] = 0
+    score["Player"] = 0
+
+    start_game()
 
 
 def start_game():
@@ -180,8 +201,8 @@ def start_game():
     #     if validate_input(ships, 0, "start"):
     #         break
 
-    player_b = Board(name, size, ships, "player")
-    computer_b = Board("Computer", size, ships, "computer")
+    player_b = Board(name, size, ships, "Player")
+    computer_b = Board("Computer", size, ships, "Computer")
 
     for ship in range(ships):
         add_ships_to_board(player_b)
