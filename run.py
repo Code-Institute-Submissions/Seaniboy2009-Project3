@@ -120,9 +120,10 @@ def return_num(num):
 
 def play_game(player, computer, size, num_ships):
     """
-    prints the player/computer boards and waits for the player input to fire a shot.
-    then the computer will randomly pick and fire a shot.
-    once both shots have been fired the board will be displayed again with the hits or miss.
+    prints the player/computer boards and waits for the player
+    input to fire a shot. then the computer will randomly pick
+    and fire a shot. once both shots have been fired the board
+    will be displayed again with the hits or miss.
     """
     print("_" * 30)
     print(f"Board set to size: {size}X{size}")
@@ -163,8 +164,6 @@ def play_game(player, computer, size, num_ships):
                 computer_outcome = player.take_shot(int(xx), int(yy))
                 break
 
-        print(computer.return_shots(x, y))
-
         print("_" * 30)
         print("Grid x is down, Grid Y is along")
         print(f"{player.name} Fired at {x}, {y} and {player_outcome}")
@@ -199,24 +198,19 @@ def start_game():
     """
 
     print('Welcome to battleships, please have fun.')
+    name = input("Please enter your name:\n")
 
-    name = "Player"
-    size = 4
-    ships = 4
+    while True:
 
-    # name = input("Please enter your name:\n")
+        size = int(input("Please pick board size, Min 4: Max 8:\n"))
+        if validate_input(size, 0, "start"):
+            break
 
-    # while True:
+    while True:
 
-    #     size = int(input("Please pick board size, Min 4: Max 8:\n"))
-    #     if validate_input(size, 0, "start"):
-    #         break
-
-    # while True:
-
-    #     ships = int(input("Please select number of ships, Min 4: Max 8:\n"))
-    #     if validate_input(ships, 0, "start"):
-    #         break
+        ships = int(input("Please select number of ships, Min 4: Max 8:\n"))
+        if validate_input(ships, 0, "start"):
+            break
 
     player_b = Board(name, size, ships, "Player")
     computer_b = Board("Computer", size, ships, "Computer")
