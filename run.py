@@ -71,13 +71,18 @@ class Board:
         else:
             return False
 
+    def return_score(self):
+        if self.score >= self.num_ships:
+            return True
+        return False
+
 
 def validate_input(input, max, type):
     """
     Checkes the input and validates it as int and sting or out of scope
     the valid_input is the min and max size allowed
     """
-    valid_input = [4, 5, 6, 7, 8]
+    valid_input = [3, 4, 5, 6, 7, 8]
     try:
         num = int(input)
 
@@ -89,7 +94,7 @@ def validate_input(input, max, type):
         elif type == "shot":
             if num not in range(0, max):
                 raise ValueError(
-                    f"Board size is {max}, you put {num}"
+                    f"Board size is {max - 1}, you put {num}"
                 )
     except ValueError as e:
         print(f"input is invalid {e}, please try again")
@@ -126,9 +131,8 @@ def play_game(player, computer, size, num_ships):
     will be displayed again with the hits or miss.
     """
     print("_" * 30)
-    print(f"Board set to size: {size}X{size}: Min being 0 and max: {size - 1}")
-    print(f"With {num_ships} ships Each")
-    print("X is down, Y is along\nLegand\nX-Miss\n*-hit\n!-Ship")
+    print(f"Board set to: {size}X{size}: With {num_ships} ships Each")
+    print("Grid x is down, Grid Y is along\nLegand: X-Miss: *-hit: !-Ship")
     print("_" * 30)
     print(f"{player.name} Board")
     player.create_board()
@@ -136,7 +140,7 @@ def play_game(player, computer, size, num_ships):
     print("Computer Board")
     computer.create_board()
 
-    while player.score or computer.score < num_ships:
+    while True:
 
         while True:
 
@@ -162,8 +166,15 @@ def play_game(player, computer, size, num_ships):
                 computer_outcome = player.take_shot(int(xx), int(yy))
                 break
 
+        if computer.return_score():
+            print(f"{player.name} WON!!!!!!")
+            break
+        elif player.return_score():
+            print("Computer WON!!!!!!")
+            break
+
         print("_" * 30)
-        print("Grid x is down, Grid Y is along\nLegand\nX-Miss\n*-hit\n!-Ship")
+        print("Grid x is down, Grid Y is along\nLegand: X-Miss: *-hit: !-Ship")
         print(f"{player.name} Fired at {x}, {y} and {player_outcome}")
         print(f"{computer.name} Fired at {xx}, {yy} and {computer_outcome}")
         print(score)
