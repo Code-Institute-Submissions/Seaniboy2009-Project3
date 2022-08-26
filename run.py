@@ -1,6 +1,6 @@
 from random import randint
 
-score = {"player": 0, "Computer": 0}
+score = {"Player": 0, "Computer": 0}
 
 
 class Board:
@@ -23,8 +23,7 @@ class Board:
     def add_ship(self, x, y):
         self.ships.append((x, y))
         self.board[x][y] = "!"
-        print(x, y)
-        # if self.type == "player":
+        # if self.type == "Player":
         #     self.board[x][y] = "!"
 
     def take_shot(self, x, y):
@@ -33,16 +32,22 @@ class Board:
 
         if (x, y) in self.ships:
             self.board[x][y] = "*"
+            if self.type == "Player":
+                score["Computer"] += 1
+            else:
+                score["Player"] += 1
             return "Hit"
         else:
             return "Miss"
 
     def return_shots(self, x, y):
         if (x, y) in self.shots:
+            print("already fired there")
             return True
         else:
+            print("not fired here")
             return False
-    
+
     def return_ships(self, x, y):
         if (x, y) in self.ships:
             return True
@@ -53,6 +58,7 @@ class Board:
 def validate_input(input, max, type):
     """
     Checkes the input and validates it as int and sting or out of scope
+    the valid_input is the min and max size allowed
     """
     valid_input = [4, 5, 6, 7, 8]
     try:
@@ -78,16 +84,13 @@ def validate_input(input, max, type):
 def add_ships_to_board(board):
     """
     Add player and computer ships to there boards using random.
+    Also checks there is not a ship already there
     """
     while len(board.ships) < board.num_ships:
         num1 = return_num(board.size)
         num2 = return_num(board.size)
-        if board.return_ships(num1, num2):
-            print("Space already taken")
-        else:
+        if not board.return_ships(num1, num2):
             board.add_ship(num1, num2)
-            print("Ship added")
-
 
 
 def return_num(num):
@@ -107,9 +110,12 @@ def play_game(player, computer, size, num_ships):
     print(f"Board set to size: {size}X{size}")
     print(f"Min being 0 and max: {size - 1}")
     print(f"With {num_ships} ships Each")
+    print("Grid x is row along, Grid Y is column down")
+    print(f"{player.name} Board")
     player.create_board()
     print("_" * 30)
-    # computer.create_board()
+    print("Computer Board")
+    computer.create_board()
 
     while True:
 
@@ -123,27 +129,29 @@ def play_game(player, computer, size, num_ships):
             if validate_input(y, size, "shot"):
                 break
 
-        if computer.return_shots(x, y):
-            print("already fired there")
-        else:
-            computer.take_shot(int(x), int(y))
-            print("Not fired there")
+        while True:
+            if not computer.return_shots(x, y):
+                computer.take_shot(int(x), int(y))
+                break
 
-        x = return_num(size)
-        y = return_num(size)
+        while True:
+            x = return_num(size)
+            y = return_num(size)
 
-        if player.return_shots(x, y):
-            print("already fired there")
-        else:
-            player.take_shot(int(x), int(y))
-            print("Not fired there")
+            if not player.return_shots(x, y):
+                player.take_shot(int(x), int(y))
+                break
 
         print(f"Board set to size: {size}X{size}")
         print(f"Min being 0 and max: {size - 1}")
         print(f"With {num_ships} ships Each")
+        print("Grid x is row along, Grid Y is column down\n")
+        print(score)
+        print(f"{player.name} Board")
         player.create_board()
         print("_" * 30)
-        # computer.create_board()
+        print("Computer Board")
+        computer.create_board()
 
 
 def start_game():
@@ -163,13 +171,13 @@ def start_game():
     # while True:
 
     #     size = int(input("Please pick board size, Min 4: Max 8:\n"))
-    #     if validate_input(size, "start"):
+    #     if validate_input(size, 0, "start"):
     #         break
 
     # while True:
 
     #     ships = int(input("Please select number of ships, Min 4: Max 8:\n"))
-    #     if validate_input(ships, "start"):
+    #     if validate_input(ships, 0, "start"):
     #         break
 
     player_b = Board(name, size, ships, "player")
@@ -177,7 +185,7 @@ def start_game():
 
     for ship in range(ships):
         add_ships_to_board(player_b)
-        # add_ships_to_board(computer_b)
+        add_ships_to_board(computer_b)
 
     play_game(player_b, computer_b, size, ships)
 
