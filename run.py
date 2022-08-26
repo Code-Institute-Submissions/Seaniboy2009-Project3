@@ -23,6 +23,7 @@ class Board:
     def add_ship(self, x, y):
         self.ships.append((x, y))
         self.board[x][y] = "!"
+        print(x, y)
         # if self.type == "player":
         #     self.board[x][y] = "!"
 
@@ -38,6 +39,12 @@ class Board:
 
     def return_shots(self, x, y):
         if (x, y) in self.shots:
+            return True
+        else:
+            return False
+    
+    def return_ships(self, x, y):
+        if (x, y) in self.ships:
             return True
         else:
             return False
@@ -72,9 +79,15 @@ def add_ships_to_board(board):
     """
     Add player and computer ships to there boards using random.
     """
-    num1 = return_num(board.size)
-    num2 = return_num(board.size)
-    board.add_ship(num1, num2)
+    while len(board.ships) < board.num_ships:
+        num1 = return_num(board.size)
+        num2 = return_num(board.size)
+        if board.return_ships(num1, num2):
+            print("Space already taken")
+        else:
+            board.add_ship(num1, num2)
+            print("Ship added")
+
 
 
 def return_num(num):
@@ -87,7 +100,7 @@ def return_num(num):
 
 def play_game(player, computer, size, num_ships):
     """
-    Creats the player/computer boards and waits for the player input to fire a shot.
+    prints the player/computer boards and waits for the player input to fire a shot.
     then the computer will randomly pick and fire a shot.
     once both shots have been fired the board will be displayed again with the hits or miss.
     """
@@ -96,7 +109,7 @@ def play_game(player, computer, size, num_ships):
     print(f"With {num_ships} ships Each")
     player.create_board()
     print("_" * 30)
-    computer.create_board()
+    # computer.create_board()
 
     while True:
 
@@ -130,7 +143,7 @@ def play_game(player, computer, size, num_ships):
         print(f"With {num_ships} ships Each")
         player.create_board()
         print("_" * 30)
-        computer.create_board()
+        # computer.create_board()
 
 
 def start_game():
@@ -141,7 +154,6 @@ def start_game():
     print('Welcome to battleships, please have fun and remember to shout:')
     print('"YOU SUNK MY BATTLESHIP"\n')
 
-    # Testing
     name = "Player"
     size = 4
     ships = 4
@@ -165,7 +177,7 @@ def start_game():
 
     for ship in range(ships):
         add_ships_to_board(player_b)
-        add_ships_to_board(computer_b)
+        # add_ships_to_board(computer_b)
 
     play_game(player_b, computer_b, size, ships)
 
