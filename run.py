@@ -210,13 +210,13 @@ def start_game():
 
     while True:
 
-        size = int(input("Please pick board size, Min 4: Max 8:\n"))
+        size = int(input("Please pick board size, Min 3: Max 8:\n"))
         if validate_input(size, 0, "start"):
             break
 
     while True:
 
-        ships = int(input("Please select number of ships, Min 4: Max 8:\n"))
+        ships = int(input("Please select number of ships, Min 3: Max 8:\n"))
         if validate_input(ships, 0, "start"):
             break
 
