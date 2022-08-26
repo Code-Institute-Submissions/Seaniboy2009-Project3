@@ -126,11 +126,9 @@ def play_game(player, computer, size, num_ships):
     will be displayed again with the hits or miss.
     """
     print("_" * 30)
-    print(f"Board set to size: {size}X{size}")
-    print(f"Min being 0 and max: {size - 1}")
+    print(f"Board set to size: {size}X{size}: Min being 0 and max: {size - 1}")
     print(f"With {num_ships} ships Each")
-    print("Grid x is down, Grid Y is along")
-    print("Legand\n X-Miss\n *-hit\n !-Ship")
+    print("X is down, Y is along\nLegand\nX-Miss\n*-hit\n!-Ship")
     print("_" * 30)
     print(f"{player.name} Board")
     player.create_board()
@@ -165,10 +163,9 @@ def play_game(player, computer, size, num_ships):
                 break
 
         print("_" * 30)
-        print("Grid x is down, Grid Y is along")
+        print("Grid x is down, Grid Y is along\nLegand\nX-Miss\n*-hit\n!-Ship")
         print(f"{player.name} Fired at {x}, {y} and {player_outcome}")
         print(f"{computer.name} Fired at {xx}, {yy} and {computer_outcome}")
-        print("Legand\nX-Miss\n*-hit\n!-Ship")
         print(score)
         print("_" * 30)
         print(f"{player.name} Board")
