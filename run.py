@@ -173,7 +173,10 @@ def play_game(player, computer, size, num_ships):
 
         turn += 1
 
-        if computer.return_score():
+        if computer.return_score() and player.return_score():
+            print("Draw !!!!!!")
+            break
+        elif computer.return_score():
             print(f"{player.name} WON!!!!!!")
             break
         elif player.return_score():
@@ -215,6 +218,8 @@ def start_game():
 
     print('Welcome to battleships, please have fun.')
     name = input("Please enter your name:\n")
+    if not name:
+        name = "Player"
 
     while True:
 
