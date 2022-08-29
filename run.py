@@ -200,8 +200,8 @@ def reset_game():
     """
     Reset game and variables
     """
-    print("********Game reset*********")
     print(score)
+    input("Press enter to continue")
     score["Computer"] = 0
     score["Player"] = 0
 
