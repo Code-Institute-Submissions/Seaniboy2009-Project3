@@ -30,14 +30,13 @@ class Board:
         """
         self.ships.append((x, y))
         self.board[x][y] = "!"
-        # if self.type == "Player":
-        #     self.board[x][y] = "!"
+        if self.type == "Player":
+            self.board[x][y] = "!"
 
     def take_shot(self, x, y):
         """
-        Adds X to x, y input of the guess shot, checks if a ship is there
-        and if there is adds * and updates scores, returns hit or miss
-        to show player.
+        Adds X to board as a shot miss, or adds a * if there is a ship there
+        and updates scores, returns hit or miss to show player.
         """
         self.shots.append((x, y))
         self.board[x][y] = "X"
@@ -55,7 +54,8 @@ class Board:
 
     def return_shots(self, x, y):
         """
-        Checks if the location has been shot at before using x, y.
+        Checks if the location has been shot at before using x, y. if it has
+        returns true, if not returns false.
         """
         if (x, y) in self.shots:
             return True
@@ -64,7 +64,8 @@ class Board:
 
     def return_ships(self, x, y):
         """
-        Checks to see if there is a ship at x, y.
+        Checks to see if there is a ship at x, y. if there is returns true,
+        if not returns false.
         """
         if (x, y) in self.ships:
             return True
@@ -80,7 +81,7 @@ class Board:
 def validate_input(input, max, type):
     """
     Checkes the input and validates it as int and sting or out of scope
-    the valid_input is the min and max size allowed
+    the valid_input is the min and max size allowed.
     """
     valid_input = [3, 4, 5, 6, 7, 8]
     try:
@@ -89,7 +90,8 @@ def validate_input(input, max, type):
         if type == "start":
             if num not in valid_input:
                 raise ValueError(
-                    f"Must be {valid_input}, you put {num}"
+                    f"Must be between {valid_input[0]} and {valid_input[-1]}."
+                    f"You input {num}"
                 )
         elif type == "shot":
             if num not in range(0, max):
@@ -130,6 +132,9 @@ def play_game(player, computer, size, num_ships):
     and fire a shot. once both shots have been fired the board
     will be displayed again with the hits or miss.
     """
+    turn = 1
+
+    print(f"---------- Turn:{turn} -----")
     print("_" * 30)
     print(f"Board set to: {size}X{size}: With {num_ships} ships Each")
     print("Grid x is down, Grid Y is along\nLegand: X-Miss: *-hit: !-Ship")
@@ -166,6 +171,8 @@ def play_game(player, computer, size, num_ships):
                 computer_outcome = player.take_shot(int(xx), int(yy))
                 break
 
+        turn += 1
+
         if computer.return_score():
             print(f"{player.name} WON!!!!!!")
             break
@@ -173,11 +180,12 @@ def play_game(player, computer, size, num_ships):
             print("Computer WON!!!!!!")
             break
 
-        print("_" * 30)
-        print("Grid x is down, Grid Y is along\nLegand: X-Miss: *-hit: !-Ship")
-        print(f"{player.name} Fired at {x}, {y} and {player_outcome}")
-        print(f"{computer.name} Fired at {xx}, {yy} and {computer_outcome}")
+        print(f"---------- Turn:{turn} -----")
         print(score)
+        print("Grid x is down, Grid Y is along\nLegand: X-Miss: *-hit: !-Ship")
+        print("_" * 30)
+        print(f"{player.name} Fired at X:{x}, Y:{y} and {player_outcome}")
+        print(f"{computer.name} Fired at X:{xx}, Y:{yy} and {computer_outcome}")
         print("_" * 30)
         print(f"{player.name} Board")
         player.create_board()
@@ -190,7 +198,7 @@ def play_game(player, computer, size, num_ships):
 
 def reset_game():
     """
-    Reset all class and variables
+    Reset game and variables
     """
     print("********Game reset*********")
     print(score)
@@ -202,7 +210,7 @@ def reset_game():
 
 def start_game():
     """
-    Initialize the start function, ask for player name, board size.
+    Initialize the start function, ask for player name, board size and ships.
     """
 
     print('Welcome to battleships, please have fun.')
