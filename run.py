@@ -5,7 +5,9 @@ score = {"Player": 0, "Computer": 0}
 
 class Board:
     """
-    Create instance of the board class.
+    Create instance of the board class. Part of this class was shown
+    on Project Portfolio-Portfolio 3-Portfolio Project Scope, i have
+    added my own functions to it.
     """
     def __init__(self, name, size, num_ships, type):
         self.name = name
@@ -29,7 +31,6 @@ class Board:
         Adds ship to grid using X, y. shows player ships with !.
         """
         self.ships.append((x, y))
-        self.board[x][y] = "!"
         if self.type == "Player":
             self.board[x][y] = "!"
 
@@ -82,6 +83,8 @@ def validate_input(input, max, type):
     """
     Checkes the input and validates it as int and sting or out of scope
     the valid_input is the min and max size allowed.
+    the idea for this came from love sandwiches project, but was not
+    copied directly
     """
     valid_input = [3, 4, 5, 6, 7, 8]
     try:
@@ -233,8 +236,8 @@ def start_game():
         if validate_input(ships, 0, "start"):
             break
 
-    player_b = Board(name, size, ships, "Player")
-    computer_b = Board("Computer", size, ships, "Computer")
+    player_b = Board(name, size, ships, type="Player")
+    computer_b = Board("Computer", size, ships, type="Computer")
 
     for ship in range(ships):
         add_ships_to_board(player_b)
