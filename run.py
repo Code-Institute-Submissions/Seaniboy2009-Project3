@@ -90,8 +90,6 @@ def validate_input(input, max, type):
     try:
         num = int(input)
 
-        print("Converted to number")
-
         if type == "start":
             if num not in valid_input:
                 raise ValueError(
