@@ -90,6 +90,8 @@ def validate_input(input, max, type):
     try:
         num = int(input)
 
+        print("Converted to number")
+
         if type == "start":
             if num not in valid_input:
                 raise ValueError(
@@ -220,30 +222,39 @@ def start_game():
     """
 
     print('Welcome to battleships, please have fun.')
-    name = input("Please enter your name:\n")
+
+    while True:
+
+        name = input("Please enter your name:\n")
+        if int(len(name)) <= 10:
+            break
+
+        print("Name to long, please try again")
+
     if not name:
+
         name = "Player"
 
     while True:
 
-        size = int(input("Please pick board size, Min 3: Max 8:\n"))
+        size = input("Please pick board size, Min 3: Max 8:\n")
         if validate_input(size, 0, "start"):
             break
 
     while True:
 
-        ships = int(input("Please select number of ships, Min 3: Max 8:\n"))
+        ships = input("Please select number of ships, Min 3: Max 8:\n")
         if validate_input(ships, 0, "start"):
             break
 
-    player_b = Board(name, size, ships, type="Player")
-    computer_b = Board("Computer", size, ships, type="Computer")
+    player_b = Board(name, int(size), int(ships), type="Player")
+    computer_b = Board("Computer", int(size), int(ships), type="Computer")
 
-    for ship in range(ships):
+    for ship in range(int(ships)):
         add_ships_to_board(player_b)
         add_ships_to_board(computer_b)
 
-    play_game(player_b, computer_b, size, ships)
+    play_game(player_b, computer_b, int(size), int(ships))
 
 
 start_game()
