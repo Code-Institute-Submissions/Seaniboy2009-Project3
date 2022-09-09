@@ -19,6 +19,20 @@ class Board:
         self.shots = []
         self.score = 0
 
+        for ship in range(int(self.num_ships)):
+            self.add_ships_to_board()
+
+    def add_ships_to_board(self):
+        """
+        Add player and computer ships to there boards using random.
+        Also checks there is not a ship already there
+        """
+        while len(self.ships) < self.num_ships:
+            num1 = return_num(self.size)
+            num2 = return_num(self.size)
+            if not self.return_ships(num1, num2):
+                self.add_ship(num1, num2)
+
     def create_board(self):
         """
         Create the board on the screen using blank spaces.
@@ -79,6 +93,27 @@ class Board:
         return False
 
 
+def set_name():
+    """
+    Gets player input for name and returns the name, if no
+    name selcted default will be set to player
+    """
+
+    while True:
+
+        name = input("Please enter your name(Default: Player):\n")
+        if int(len(name)) <= 10:
+            break
+
+        print("Name to long, please try again")
+
+        if not name:
+
+            name = "Player"
+
+    return name
+
+
 def validate_input(input, max, type):
     """
     Checkes the input and validates it as int and sting or out of scope
@@ -106,18 +141,6 @@ def validate_input(input, max, type):
         return False
 
     return True
-
-
-def add_ships_to_board(board):
-    """
-    Add player and computer ships to there boards using random.
-    Also checks there is not a ship already there
-    """
-    while len(board.ships) < board.num_ships:
-        num1 = return_num(board.size)
-        num2 = return_num(board.size)
-        if not board.return_ships(num1, num2):
-            board.add_ship(num1, num2)
 
 
 def return_num(num):
@@ -165,6 +188,8 @@ def play_game(player, computer, size, num_ships):
             if not computer.return_shots(int(x), int(y)):
                 player_outcome = computer.take_shot(int(x), int(y))
                 break
+            else:
+                print("Already fired there, try again")
 
         while True:
             xx = return_num(size)
@@ -220,38 +245,22 @@ def start_game():
     """
 
     print('Welcome to battleships, please have fun.')
+    name = set_name()
 
     while True:
 
-        name = input("Please enter your name:\n")
-        if int(len(name)) <= 10:
-            break
-
-        print("Name to long, please try again")
-
-    if not name:
-
-        name = "Player"
-
-    while True:
-
-        size = input("Please pick board size, Min 3: Max 8:\n")
+        size = input("Please pick board size, Between 3 and 8:\n")
         if validate_input(size, 0, "start"):
             break
 
     while True:
 
-        ships = input("Please select number of ships, Min 3: Max 8:\n")
+        ships = input("Please select number of ships, Between 3 and 8:\n")
         if validate_input(ships, 0, "start"):
             break
 
     player_b = Board(name, int(size), int(ships), type="Player")
     computer_b = Board("Computer", int(size), int(ships), type="Computer")
-
-    for ship in range(int(ships)):
-        add_ships_to_board(player_b)
-        add_ships_to_board(computer_b)
-
     play_game(player_b, computer_b, int(size), int(ships))
 
 

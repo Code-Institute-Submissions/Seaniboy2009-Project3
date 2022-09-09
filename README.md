@@ -41,7 +41,7 @@ The game will continue like this until the player or computer sinks all the othe
 
 ![Header](docs/wireframe/options.jpg)
 
-- player will play agest the computer.
+- player will play against the computer.
 - player can input where there shots will go.
 
 ![Header](docs/wireframe/firstturn.jpg)
@@ -109,7 +109,8 @@ __Accessibility__
     - Deployment from heroku involved signing up to the site, then you need to click create your first app. to deploy my project i went to settings tab, click on add config vars, click on add and set to PORT with value 8000, I also had to set the build packs for Python then Node.js, once done i then clicked on the deploy tab linked to my github, selected the main branch then deployed, i set this to automatic deploys so when ever i made a change it would do it.
 
 - GitPod
-    - Deployment from gitpod was done by adding all changed with git add ., this then allowed me to commit the changes by doing git commit -m "changes in here", once i was happy with that i could then push them to github, using git push command, as i set up heroku with auto deploy it would pull the updates sent from github.
+    - Deployment from gitpod was done by adding changes to the python3 command line, command to add changes git add ., adds each file to the awating commit, then type in commit -m "changes in here", once i was happy with that i could then push them to github, using git push command, as i set up heroku with auto deploy it would pull the updates sent from github.
+    - python3 command line > git add ./or file name > git commit -m "information in here" > git push to send changes to github
 
 ## Credits
 
