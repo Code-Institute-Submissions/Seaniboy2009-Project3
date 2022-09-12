@@ -23,7 +23,9 @@ Your objective is to destroy all the computers ships before they destoy yours, o
 
 - __The main game__
 
-Each turn the player will be shown  the two boards, and any misses marked with X, they will also be shown  ships with ! and hits on ships with *, however they will only see their own ships.
+    - Select between 0 and max board size to go down on board, then select between 0 and max to go across on the board, 0, 0 is the top left.
+
+Each turn the player will be shown the two boards, and any misses marked with X, they will also be shown  ships with ! and hits on ships with *, however they will only see their own ships.
 For the turn the player will be prompted to enter an X on the grid, then a y, this will then fire the shot, the computer will then fire and you will be shown if the player and computer hit or miss.
 The game will continue like this until the player or computer sinks all the others ships, or if there is a draw.
 
@@ -79,6 +81,8 @@ I have tested the application in gitpod(python3 run.py), tested on the deployed 
 
 - Tested with stings when it should be ints, tested ints when it should be stings, checked for empty input(this is allowed for user name if left blank the name is set to player).
 - Tested on windows 10 and 11 pc
+
+![Header](docs/wireframe/validationtest.jpg)
 
 - __Code__
 
