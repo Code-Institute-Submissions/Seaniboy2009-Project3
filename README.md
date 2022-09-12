@@ -26,7 +26,9 @@ Your objective is to destroy all the computers ships before they destoy yours, o
     - Select between 0 and max board size to go down on board, then select between 0 and max to go across on the board, 0, 0 is the top left.
 
 Each turn the player will be shown the two boards, and any misses marked with X, they will also be shown  ships with ! and hits on ships with *, however they will only see their own ships.
+
 For the turn the player will be prompted to enter an X on the grid, then a y, this will then fire the shot, the computer will then fire and you will be shown if the player and computer hit or miss.
+
 The game will continue like this until the player or computer sinks all the others ships, or if there is a draw.
 
 ## Features
@@ -81,6 +83,7 @@ I have tested the application in gitpod(python3 run.py), tested on the deployed 
 
 - Tested with stings when it should be ints, tested ints when it should be stings, checked for empty input(this is allowed for user name if left blank the name is set to player).
 - Tested on windows 10 and 11 pc
+- Tested for draw cases(computer and player both have same score) and implemented a fix for this.
 
 ![Header](docs/wireframe/validationtest.jpg)
 
@@ -97,8 +100,9 @@ I have tested the application in gitpod(python3 run.py), tested on the deployed 
 - __Bugs / Issues__
 
     - Fixed
-        - a few issues with indexing 0.
-        - forgetting to convert input to ints and having errors.
+        - A few issues with indexing 0.
+        - Forgetting to convert input to ints and having errors.
+        - When player and computer had the same score at end of the turn, this caused some issues, implemented a fix for this.
 
     - Unfixed
         - No unfixed
@@ -107,10 +111,11 @@ __Accessibility__
 
 ## Deployment
 
-- GitPod was used to create\ gitpod for version control and heroku to deploy [Live version](https://sean-clark-project-3.herokuapp.com/).
+- GitPod was used to create\ github for version control and heroku to deploy [Live version](https://sean-clark-project-3.herokuapp.com/).
 
 - Heroku
-    - Deployment from heroku involved signing up to the site, then you need to click create your first app. to deploy my project i went to settings tab, click on add config vars, click on add and set to PORT with value 8000, I also had to set the build packs for Python then Node.js, once done i then clicked on the deploy tab linked to my github, selected the main branch then deployed, i set this to automatic deploys so when ever i made a change it would do it.
+    - Deployment from heroku involved signing up to the site, click create your first app. to deploy my project i went to settings tab, click on add config vars, click on add and set to PORT with value 8000, I also had to set the build packs for Python then Node.js, once done i then clicked on the deploy tab linked to my github, selected the main branch then deployed, i set this to automatic deploys so when ever i made a change it would do it.
+    - New app > settings > config var > build packs > deploy
 
 - GitPod
     - Deployment from gitpod was done by adding changes to the python3 command line, command to add changes git add ., adds each file to the awating commit, then type in commit -m "changes in here", once i was happy with that i could then push them to github, using git push command, as i set up heroku with auto deploy it would pull the updates sent from github.
@@ -121,4 +126,4 @@ __Accessibility__
 - __References__
 
 - Code
- - Some code ideas came from the love sandwiches project and the ultimate battleships video
+ - Some code ideas came from the love sandwiches project and the ultimate battleships video, but all code was typed by myself none was copied and pasted.
